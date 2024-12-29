@@ -29,4 +29,48 @@ check the apache service on the web server to be active and running :
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/4apacheStatusOn132.png?raw=true)
 
+we can test the web server access inside our internal network :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/5apacheFromInternalNet.png?raw=true)
+
+testing it from the outside network (client machine) encounters with unreachable 🚫.
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/6clientPingUnreachable.png?raw=true)
+
+The pfsense 🛡️ server interfaces’ addresses shows in the below picture :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/7pfsense.png?raw=true)
+
+We can access to the pfsense dashboard 📊 :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/8pfsenseDashbourd.png?raw=true)
+
+Before apply the port forwarding config in the pfsense, when we send a request to the pfsense wan interface (like IP Valid) , we can’t access to the web server (apache) on the internal network that means the routing is not happen :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/9preNatConfig_FromClient.png?raw=true)
+
+the LAN Interface menu :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/10gw0.png?raw=true)
+
+pfsense LAN properties :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/11gw1.png?raw=true)
+
+We must define a default gateway for the LAN Interface :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/12gw2.png?raw=true)
+
+And go to Interfaces > WAN for some changes for local networks :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/13nat1.png?raw=true)
+
+please uncheck two options for the private networks & loopback addresses test :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/14nat2.png?raw=true)
+
+DNAT
+It’s time to configure the NAT (Port Forwarding) on pfsense. 🚀
+
+Configure : Firewall > NAT > Port Forward
 
