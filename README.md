@@ -74,3 +74,71 @@ It’s time to configure the NAT (Port Forwarding) on pfsense. 🚀
 
 Configure : Firewall > NAT > Port Forward
 
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/13nat1.png?raw=true)
+
+
+Navigate to the page, Firewall > NAT > Port Forward, then click ‘Add’.
+
+This will take you through to the page where you can configure your port forwarding rules. Enter the following information,
+
+The options we selected in WAN Interface side :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/14nat2.png?raw=true)
+
+And the options we selected in redirection ip (192.168.56.132) & port (80) that is the exact web server address :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/15nat3.png?raw=true)
+
+The core settings that you need to look at in the above screenshot are :
+
+Interface: WAN
+This is telling pfSense that it should listen on the physical port on your firewall that is being used for the WAN traffic. This is the port that is connected to your modem (Internet or outside network) using an Ethernet RJ45 cable.
+
+Protocol: TCP
+This is fine to keep as it is. For the vast majority of configuration, TCP is the protocol you want to be using.
+
+Source: Ignore
+For the purpose of hosting a website, you can ignore configuring the source as you want as many potential customers around the world to access you website and buy something. On the other hand, if you are wanting to public a website that only certain IP addresses should be able to access, you are probably going to want to configure this so that you can whitelist their IP addresses in here. For now though, we’re going to keep things simple here.
+
+Destination: WAN Address
+This is a bit of an odd one when you first look at it, as you would assume that this should be set to LAN Address. Weirdly though, on the whole with a standard pfSense setup, this needs to be set to WAN Address. You tend to set this to LAN Address when you want to access something on localhost 127.0.0.1, which is actually the pfSense device itself. So technically when you think about this a little more, a WAN address from the pfSense software on the pfSense hardware is actually anything that is not on the pfSense hardware.
+
+Destination Port Range: HTTP (80)
+If you just want to test getting a single website hosted behind your pfSense firewall initially, then by all means set this to HTTP then you can set up Let’s Encrypt later and update your configuration accordingly. Generally speaking you probably want to keep things simple so that there is only one port used, rather than a range of ports — although you can configure the From Port and To Port as a range of ports if you want to try something more advanced.
+
+Redirect Target IP: 192.168.56.132
+Naturally enter the LAN IP address of your web server here.
+
+Redirect Target Port: HTTP (80)
+In this specific example, this is set to 80
+
+Done. Save this and you’re good to go. Once you’ve saved this, make sure you click Apply Changes.
+
+Once you have clicked Apply Changes, you will notice a message appear that asks you if you want to view the status of the firewall rules being reloaded (and hence working…) which can be handy to double check that this has loaded correctly :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/2/4.webp?raw=true)
+
+When you click on the Monitor link in the above image, this shows you the reload process in real time so you can make sure that it completes successfully.
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/2/5.webp?raw=true)
+
+Once you have done this, you will notice that your Port Forwarding rules have now been applied :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/16nat4.png?raw=true)
+
+What is important to note here is that this action has actually done something automatically for you in the background. To see what this is, first, click back into that Port Forward rule you just created to edit it. You will notice towards the bottom of the page that this has automatically created a Filter Rule Association for you with the name “Rule NAT redirect to 132” which is the same name you used in your previous Description field.
+
+What you’ll notice is that the Firewall Rule has been automatically populated with the information you entered in the previous screen we were looking at on Firewall > NAT > Port Forward. pfSense has even automatically generated the same name for you to make your life as easy as possible which is a great little feature.
+
+The auto generated Rule for the defined NAT in the background :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/17nat5.png?raw=true)
+
+Test Your Website ♻️
+Now we’ve gone through the process of setting up all of the pfSense configuration, you should now be able to access your website easily.
+
+we can access to the web server (internal network) from the clinet machine (outside network) :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/18postNatConfig_FromClient.png?raw=true)
+
+The routing 🔀 action is happening now successfully.✔️
