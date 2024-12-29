@@ -2,11 +2,15 @@
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/bigPicture.png?raw=true)
 
+<hr />
+
 PfSense is a firewall/router computer software distribution based on FreeBSD. The open source pfSense Community Edition (CE) and pfSense Plus is installed on a physical computer or a virtual machine to make a dedicated firewall/router for a network.[3] It can be configured and upgraded through a web-based interface, and requires no knowledge of the underlying FreeBSD system to manage.
 
 One very common use case for using pfSense is to host a single website. So here we are going to show you how simple that is to do. As this is the very first step towards understanding how to host multiple websites behind your pfSense firewall, the reality is that the approach is very different to when you get to the point of hosting multiple websites behind your pfSense firewall.
 
 So the first step towards understanding how to host a single website behind your pfSense firewall is to understand the concept of Port Forwarding. Port Forwarding at the simplest level is to translate Port 1 Inbound on your WAN, to Port 2 on your LAN. To visualise what this means in an extremely basic setup, the diagram above looks at how Port Forwarding works.
+
+<hr />
 
 Senario 1 🎉 :
 We have 3 machine (a client in the outside network like the internet that send some http request to web server through pfsense firewall, a pfsense with 2 NICs, for firewall and port forwarding and a web server in the internal network).
@@ -36,6 +40,8 @@ we can test the web server access inside our internal network :
 testing it from the outside network (client machine) encounters with unreachable 🚫.
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/6clientPingUnreachable.png?raw=true)
+
+<hr />
 
 The pfsense 🛡️ server interfaces’ addresses shows in the below picture :
 
@@ -68,6 +74,8 @@ And go to Interfaces > WAN for some changes for local networks :
 please uncheck two options for the private networks & loopback addresses test :
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/2/2.webp?raw=true)
+
+<hr />
 
 DNAT
 It’s time to configure the NAT (Port Forwarding) on pfsense. 🚀
@@ -134,6 +142,8 @@ The auto generated Rule for the defined NAT in the background :
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/17nat5.png?raw=true)
 
+<hr />
+
 Test Your Website ♻️
 Now we’ve gone through the process of setting up all of the pfSense configuration, you should now be able to access your website easily.
 
@@ -143,11 +153,15 @@ we can access to the web server (internal network) from the clinet machine (outs
 
 The routing 🔀 action is happening now successfully.✔️
 
+<hr />
+
 Senario 2 🎉:
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/1.webp?raw=true)
 
 Nginx (“engine x”) is an HTTP web server, reverse proxy, content cache, load balancer, TCP/UDP proxy server, and mail proxy server.
+
+<hr />
 
 We install a Nginx Server 🔀 on a new server with ip of 192.168.56.154 :
 
@@ -162,6 +176,8 @@ we had an apache web server already with ip of 192.168.56.132 :
 and a new apache web server with ip of 192.168.56.155 :
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/5.webp?raw=true)
+
+<hr />
 
 write some configs in the nginx server with the name of apache :
 
@@ -233,6 +249,8 @@ Create a link for the nginx apache config to the sites-enabled to be active :
 Please set DNS Server A records for the domains that at this article we set them in the /etc/hosts inside of the clinet machine :
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/15.webp?raw=true)
+
+<hr />
 
 Test ♻️ :
 and it’s time to test the web sites from the client (Outside Network or the Internet) :
