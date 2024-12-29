@@ -20,3 +20,13 @@ The client machine (named Lab) is in the outside network (like Internet) with ip
 The web server machine (named DesktopTest) is in the internal network (LAN) with ip (192.168.56.132) 🏡 :
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3webServerNICs.png?raw=true)
+
+We want to write some changes 🔄 in apache default page on the web server :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/4apacheOn132.png?raw=true)
+
+check the apache service on the web server to be active and running :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/4apacheStatusOn132.png?raw=true)
+
+
