@@ -12,7 +12,8 @@ So the first step towards understanding how to host a single website behind your
 
 <hr />
 
-Senario 1 🎉 :
+Senario 1 🎉 : 
+
 We have 3 machine (a client in the outside network like the internet that send some http request to web server through pfsense firewall, a pfsense with 2 NICs, for firewall and port forwarding and a web server in the internal network).
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/1Servers.png?raw=true)
@@ -145,6 +146,7 @@ The auto generated Rule for the defined NAT in the background :
 <hr />
 
 Test Your Website ♻️
+
 Now we’ve gone through the process of setting up all of the pfSense configuration, you should now be able to access your website easily.
 
 we can access to the web server (internal network) from the clinet machine (outside network) :
@@ -253,6 +255,7 @@ Please set DNS Server A records for the domains that at this article we set them
 <hr />
 
 Test ♻️ :
+
 and it’s time to test the web sites from the client (Outside Network or the Internet) :
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/16.webp?raw=true)
