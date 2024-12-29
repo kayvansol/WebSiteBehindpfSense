@@ -142,3 +142,111 @@ we can access to the web server (internal network) from the clinet machine (outs
 ![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/18postNatConfig_FromClient.png?raw=true)
 
 The routing 🔀 action is happening now successfully.✔️
+
+Senario 2 🎉:
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/1.webp?raw=true)
+
+Nginx (“engine x”) is an HTTP web server, reverse proxy, content cache, load balancer, TCP/UDP proxy server, and mail proxy server.
+
+We install a Nginx Server 🔀 on a new server with ip of 192.168.56.154 :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/2.webp?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/3.webp?raw=true)
+
+we had an apache web server already with ip of 192.168.56.132 :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/4.webp?raw=true)
+
+and a new apache web server with ip of 192.168.56.155 :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/5.webp?raw=true)
+
+write some configs in the nginx server with the name of apache :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/6.webp?raw=true)
+
+```
+server {
+        listen 80;
+        server_name web1.com www.web1.com;
+
+        location / {
+            proxy_pass http://192.168.56.132:80;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+
+server {
+        listen 80;
+        server_name web2.com www.web2.com;
+
+        location / {
+            proxy_pass http://192.168.56.155:80;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+```
+
+check the nginx config before apply it :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/7.webp?raw=true)
+
+restart the nginx server with new config :
+
+```
+sudo systemctl restart nginx
+```
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/8.webp?raw=true)
+
+Test the 2 web server from inside of nginx server :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/9.webp?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/10.webp?raw=true)
+
+DNAT
+At pfsense 🛡️ side, change the NAT Port Forwarding to redirect to new nginx server :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/11.webp?raw=true)
+
+the related generated rule :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/12.webp?raw=true)
+
+test the pfsense WAN IP that redirects to the nginx web server gateway :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/13.webp?raw=true)
+
+Create a link for the nginx apache config to the sites-enabled to be active :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/14.webp?raw=true)
+
+Please set DNS Server A records for the domains that at this article we set them in the /etc/hosts inside of the clinet machine :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/15.webp?raw=true)
+
+Test ♻️ :
+and it’s time to test the web sites from the client (Outside Network or the Internet) :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/16.webp?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/17.webp?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/18.webp?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/19.webp?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/20.webp?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/3/21.webp?raw=true)
+
+Congratulation 🍹, the DNS Server, pfsense, nginx gateway and 2 apache web servers works well with togethers.✔️
