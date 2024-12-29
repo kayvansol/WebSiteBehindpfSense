@@ -63,11 +63,11 @@ We must define a default gateway for the LAN Interface :
 
 And go to Interfaces > WAN for some changes for local networks :
 
-![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/13nat1.png?raw=true)
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/2/1.webp?raw=true)
 
 please uncheck two options for the private networks & loopback addresses test :
 
-![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/14nat2.png?raw=true)
+![alt text](https://raw.githubusercontent.com/kayvansol/WebSiteBehindpfSense/refs/heads/main/img/2/2.webp?raw=true)
 
 DNAT
 It’s time to configure the NAT (Port Forwarding) on pfsense. 🚀
